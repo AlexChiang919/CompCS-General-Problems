@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.Arrays;
 
 /**
@@ -11,6 +12,8 @@ import java.util.Arrays;
  */
 public class Factorials {
 
+	private static boolean recursion = false;
+	
 	public static void main(String[] args) throws IOException {
 		BufferedReader scan;
 		try {
@@ -19,27 +22,39 @@ public class Factorials {
 			printF(true, "File not found: %s", ex.getMessage());
 			return;
 		}
-		Arrays.fill(prev, 1);
-		prev[0] = 1;
-		prev[1] = 1;
-		prev[2] = 2;
-		prev[3] = 6;
+		Arrays.fill(prev, new BigInteger("1"));
+		prev[0] = new BigInteger("1");
+		prev[1] = new BigInteger("1");
+		prev[2] = new BigInteger("2");
 		while (scan.ready()) {
 			int i = Integer.parseInt(scan.readLine());
-			printLine(fac(i));
+			if (!recursion)
+				printLine(fac(i));
+			else
+				printLine(facRecur(i));
 		}
 		scan.close();
 	}
 	
-	private static long[] prev = new long[50];
+	private static BigInteger[] prev = new BigInteger[10000];
 	
-	public static long fac(int n) {
+	public static BigInteger fac(int n) {
+		BigInteger nn = new BigInteger("" + n);
 		if (n == 0 || n == 1)
-			return 1;
-		else
-			prev[n] = n * fac(n - 1);
+			return new BigInteger("1");
+		else if (prev[n].toString().equals("1"))
+			prev[n] = nn.multiply(fac(n - 1));
 		return prev[n];
 	}
+	
+	public static BigInteger facRecur(int n) {
+		BigInteger nn = new BigInteger("" + n);
+		if (n == 0 || n == 1)
+			return new BigInteger("1");
+		else
+			return nn.multiply(facRecur(n - 1));
+	}
+
 
 	public static void print(Object... o) {
 		for (Object obj : o) {
