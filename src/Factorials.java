@@ -12,7 +12,7 @@ import java.util.Arrays;
  */
 public class Factorials {
 
-	private static boolean recursion = false;
+	private static boolean recursion = true;
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader scan;
