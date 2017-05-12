@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,7 +22,7 @@ public class WordCookies {
 		BufferedReader scan;
 		BufferedReader scann;
 		try {
-			scan = new BufferedReader(new FileReader("wordcookies_letters.txt"));
+			scan = new BufferedReader(new InputStreamReader(System.in));
 			scann = new BufferedReader(new FileReader("wordcookies.txt"));
 		} catch (FileNotFoundException ex) {
 			printF(true, "File not found: %s", ex.getMessage());
@@ -29,17 +30,20 @@ public class WordCookies {
 		}
 		while (scann.ready())
 			dict.add(scann.readLine());
+		print("Letters (all lowercase): ");
 		letters = scan.readLine().toCharArray();
 		Arrays.sort(letters);
+		printLine("==================================================");
 		used = new boolean[letters.length];
 		Arrays.fill(used, false);
+		printLine("Possible Words List:");
 		recur("");
 		scan.close();
 		scann.close();
 	}
 
 	public static void recur(String currentWord) {
-		if (dict.contains(currentWord))
+		if (currentWord.length() >= 3 && dict.contains(currentWord))
 			printLine(currentWord);
 		for (int i = 0; i < letters.length; i++) {
 			if (!used[i]) {
