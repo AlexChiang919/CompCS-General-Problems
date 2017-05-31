@@ -33,6 +33,8 @@ public class LetterCubes {
 		}
 		scan.close();
 	}
+	
+	
 
 	public static void print(Object... o) {
 		for (Object obj : o) {
